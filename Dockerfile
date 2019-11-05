@@ -26,3 +26,17 @@ RUN apt-get update \
     qml-module-qt-labs-folderlistmodel \
     net-tools
 
+RUN pip3 install umodbus
+
+RUN apt-get update \
+    && apt-get install -y \
+    python3-pyside2.qtqml \
+    python3-pyside2.qtnetwork \
+    python3-pyside2.qtquick \
+    python3-pyside2.qtquickwidgets \
+    qtdeclarative5-dev \
+    qml-module-qtquick-controls2 \
+    python-pyside2.qtquick libqt53dquick5 \
+    qml-module-qtquick-dialogs \
+    qml-module-qt-labs-settings
+
