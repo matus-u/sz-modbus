@@ -83,4 +83,9 @@ ApplicationWindow {
         anchors.right: parent.right
 
     }
+
+    Component.onCompleted: {
+        if (modbusProxy)
+            modbusProxy.newConfigRequest()
+    }
 }

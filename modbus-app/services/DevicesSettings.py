@@ -2,6 +2,8 @@ from PySide2 import QtWidgets
 from PySide2 import QtGui
 from PySide2 import QtCore
 
+import json
+
 class DevicesSettings(QtCore.QObject):
     SettingsPath = "configs/devices.conf"
     SettingsFormat = QtCore.QSettings.NativeFormat
@@ -16,6 +18,9 @@ class DevicesSettings(QtCore.QObject):
     @QtCore.Slot(result=str)
     def getDevicesConf(self):
         return self.settings.value(DevicesSettings.DevicesString, "")
+
+    def getDevicesConfDict(self):
+        return json.loads(self.getDevicesConf())
 
     @QtCore.Slot(str)
     def storeDevicesConf(self, jsonString):

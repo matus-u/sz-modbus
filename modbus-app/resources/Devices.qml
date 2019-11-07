@@ -25,7 +25,10 @@ Page {
         var datamodel = []
         for (var i = 0; i < devicesModel.count; ++i) datamodel.push(devicesModel.get(i))
         datastore = JSON.stringify(datamodel)
-        devicesSettings.storeDevicesConf(datastore)
+        if (devicesSettings)
+            devicesSettings.storeDevicesConf(datastore)
+        if (modbusProxy)
+            modbusProxy.newConfigRequest()
     }
 
     AddEditDevice {
