@@ -1,6 +1,6 @@
 from PySide2.QtWidgets import QApplication
 from PySide2.QtQuick import QQuickView
-from PySide2.QtCore import QUrl
+from PySide2.QtCore import QUrl, QObject, QThread
 from PySide2.QtQml import QQmlApplicationEngine
 
 from generated import qml
@@ -11,6 +11,7 @@ from services.ModbusController import ModbusController
 
 import os
 import sys
+
 
 def main():
     os.environ["QML2_IMPORT_PATH"]="resources/kbstyle"
@@ -24,14 +25,15 @@ def main():
     devicesSettings = DevicesSettings()
     timerService = TimerService()
     modbusController = ModbusController()
-    timerService.addTimerWorker(modbusController)
 
+    timerService.addTimerWorker(modbusController)
     modbusProxyController = modbusController.getProxy(devicesSettings)
 
     engine = QQmlApplicationEngine ()
     engine.rootContext().setContextProperty("devicesSettings", devicesSettings)
     engine.rootContext().setContextProperty("modbusProxy", modbusProxyController)
     engine.load(QUrl("qrc:/main.qml"))
+    modbusProxyController.newLiveDataArrived.connect(engine.rootObjects()[0].dataArrived)
 
     modbusController.start()
 

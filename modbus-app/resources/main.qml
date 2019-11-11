@@ -10,6 +10,12 @@ ApplicationWindow {
     height: 600
     title: qsTr("Stack")
     flags: Qt.Window | Qt.FramelessWindowHint
+
+    function dataArrived()
+    {
+        liveView.refreshData()
+    }
+
     header: ToolBar {
         position: ToolBar.Header
         contentHeight: toolButton.implicitHeight
@@ -38,6 +44,8 @@ ApplicationWindow {
         width: window.width * 0.66
         height: window.height
 
+        objectName: "drawer"
+
         Column {
             anchors.fill: parent
 
@@ -60,9 +68,14 @@ ApplicationWindow {
         }
     }
 
+    LiveView
+    {
+        id: liveView
+    }
+
     StackView {
         id: stackView
-        initialItem: "LiveView.qml"
+        initialItem: liveView
         anchors.fill: parent
 
         TextField {
@@ -88,4 +101,6 @@ ApplicationWindow {
         if (modbusProxy)
             modbusProxy.newConfigRequest()
     }
+
+
 }

@@ -51,7 +51,6 @@ Rectangle
         y: 44
         width: 424
         height: 43
-        focus: Qt.inputMethod.visible;
     }
 
     ComboBox {

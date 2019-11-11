@@ -1,5 +1,8 @@
 from PySide2 import QtCore
 
+import random
+from model.MeasuredCharacteristic import MeasuredCharacteristic
+
 def createDevice(name, address, devType):
     if devType == "WIND SENSOR":
         print ("CREATE WIND")
@@ -13,6 +16,9 @@ class ModbusDevice:
     def __init__(self, serialPort, address):
         self.address = address 
         self._name = serialPort 
+
+    def getName(self):
+        return self._name
     
     def getCharacteristics(self, serialPort):
         return []
@@ -20,14 +26,16 @@ class ModbusDevice:
     def getSerialSpeed(self):
         return 115200
 
+def getNumber():
+    return random.randrange(10)
+
 
 class WindSensor(ModbusDevice):
     def __init__(self, serialPort, address):
         super().__init__(serialPort, address)
     
     def getCharacteristics(self, serialPort):
-        print ("WIND SENSOR")
-        return []
+        return [MeasuredCharacteristic.createCharacteristic("Wind direction", MeasuredCharacteristic.CharacteristicType.WIND_DIRECTION, getNumber(), "degrees")]
 
     def getSerialSpeed(self):
         return 9600
@@ -38,8 +46,12 @@ class MultipleMeteo(ModbusDevice):
         super().__init__(serialPort, address)
     
     def getCharacteristics(self, serialPort):
-        print ("WIND METEOSENSOR")
-        return []
+        return [
+                MeasuredCharacteristic.createCharacteristic("Temperature", MeasuredCharacteristic.CharacteristicType.TEMPERATURE, getNumber(), "degrees"),
+                MeasuredCharacteristic.createCharacteristic("Humidity", MeasuredCharacteristic.CharacteristicType.HUMIDITY, getNumber(), "%"),
+                MeasuredCharacteristic.createCharacteristic("Atmospheric preasure", MeasuredCharacteristic.CharacteristicType.ATMOSPHERE_PREASURE, getNumber(), "hP"),
+                MeasuredCharacteristic.createCharacteristic("CO2 concentration", MeasuredCharacteristic.CharacteristicType.CO2_VALUE, getNumber(), "ppm")
+               ]
 
     def getSerialSpeed(self):
         return 115200

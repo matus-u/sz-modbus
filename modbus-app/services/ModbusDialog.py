@@ -3,6 +3,7 @@ import struct
 from serial import Serial, PARITY_NONE
 
 from umodbus.client.serial import rtu
+import time
 
 def getSerialPort(baud):
     try:
@@ -23,7 +24,6 @@ def getMeasuredValues(device):
             measuredValues.extend(device.getCharacteristics(port))
         finally:
             port.close()
+    
+    time.sleep(0.2)
     return measuredValues
-
-
-

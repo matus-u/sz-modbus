@@ -26,4 +26,3 @@ class DevicesSettings(QtCore.QObject):
     def storeDevicesConf(self, jsonString):
         self.settings.setValue(DevicesSettings.DevicesString, jsonString)
 
-

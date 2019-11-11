@@ -32,10 +32,10 @@ serial_port_9600 = get_serial_port(9600)
 ### amount of coils written, in this case it is.
 #response = rtu.send_message(message, serial_port_115200)
 #print (response)
-message = rtu.write_multiple_registers(slave_id=96, starting_address=0, values=[2, 0x476f, 0x6f64, 0x2064])
+#message = rtu.write_multiple_registers(slave_id=96, starting_address=0, values=[2, 0x476f, 0x6f64, 0x2064])
 # Response depends on Modbus function code. This particular returns the
 # amount of coils written, in this case it is.
-print (message)
+message = rtu.read_holding_registers(slave_id=1, starting_address=0, quantity=1)
 response = rtu.send_message(message, serial_port_9600)
 print (response)
 
