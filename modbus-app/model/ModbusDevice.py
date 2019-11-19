@@ -1,4 +1,4 @@
-from PySide2 import QtCore
+from PyQt5 import QtCore
 
 from umodbus.client.serial import rtu
 from model.MeasuredCharacteristic import MeasuredCharacteristic
@@ -51,6 +51,7 @@ class MultipleMeteo(ModbusDevice):
         return [
                 MeasuredCharacteristic.createCharacteristic("Temperature", MeasuredCharacteristic.CharacteristicType.TEMPERATURE, response[0]/10, "degrees"),
                 MeasuredCharacteristic.createCharacteristic("Humidity", MeasuredCharacteristic.CharacteristicType.HUMIDITY, response[1]/10, "%"),
+                MeasuredCharacteristic.createCharacteristic("Dew point", MeasuredCharacteristic.CharacteristicType.DEW_POINT, response[2]/10, "degrees"),
                 MeasuredCharacteristic.createCharacteristic("Atmospheric preasure", MeasuredCharacteristic.CharacteristicType.ATMOSPHERE_PREASURE, response[4]/10, "hP"),
                 MeasuredCharacteristic.createCharacteristic("CO2 concentration", MeasuredCharacteristic.CharacteristicType.CO2_VALUE, response[5], "ppm")
                ]

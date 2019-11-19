@@ -1,6 +1,6 @@
-from PySide2 import QtWidgets
-from PySide2 import QtGui
-from PySide2 import QtCore
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui
+from PyQt5 import QtCore
 
 from services.DevicesSettings import DevicesSettings
 from services.TimerService import TimerStatusObject
@@ -17,38 +17,37 @@ else:
 
 class ModbusProxyController(QtCore.QObject):
 
-    newConfigPrepared = QtCore.Signal(object)
-    newLiveDataArrived = QtCore.Signal()
+    newConfigPrepared = QtCore.pyqtSignal('PyQt_PyObject')
+    newLiveDataArrived = QtCore.pyqtSignal()
 
     def __init__(self, devicesSettings):
         super().__init__()
         self.deviceConfig = devicesSettings
         self.liveData = []
 
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def newConfigRequest(self):
         self.newConfigPrepared.emit(self.deviceConfig.getDevicesConfDict())
 
-    @QtCore.Slot()
+    @QtCore.pyqtSlot(object)
     def newMeasuredValues(self, newValues):
         self.liveData = newValues
         self.newLiveDataArrived.emit()
 
-    @QtCore.Slot(result='QVariant')
+    @QtCore.pyqtSlot(result='QVariant')
     def getLiveData(self):
         return self.liveData
 
 class ModbusController(TimerStatusObject):
 
-    newMeasuredValues = QtCore.Signal(object)
+    newMeasuredValues = QtCore.pyqtSignal('PyQt_PyObject')
 
     def __init__(self):
         super().__init__(3000)
         self.devices = []
 
-    @QtCore.Slot()
+    @QtCore.pyqtSlot(dict)
     def newDevicesConfiguration(self, configuration):
-
         self.devices.clear()
         for device in configuration:
             self.devices.append(ModbusDevice.createDevice(device["name"], int(device["address"]), device["type"]))

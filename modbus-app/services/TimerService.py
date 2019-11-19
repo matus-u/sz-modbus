@@ -1,11 +1,11 @@
-from PySide2 import QtWidgets
-from PySide2 import QtGui
-from PySide2 import QtCore
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui
+from PyQt5 import QtCore
 
 class TimerStatusObject(QtCore.QObject):
 
-    startCheckStatus = QtCore.Signal()
-    stopCheckStatus = QtCore.Signal()
+    startCheckStatus = QtCore.pyqtSignal()
+    stopCheckStatus = QtCore.pyqtSignal()
 
     def __init__(self, duration):
         super().__init__()

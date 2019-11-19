@@ -1,8 +1,9 @@
-import QtQuick 2.0
+    import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 
 import QtQuick.Controls.Material 2.0
+
 
 Popup {
 
@@ -35,7 +36,7 @@ Rectangle
     y: ((parent.height - height) /2) - 30
     color: Material.color(Material.Grey, Material.Shade800)
 
-    Text {
+    Label {
         id: element
         x: 8
         y: 44
@@ -51,6 +52,7 @@ Rectangle
         y: 44
         width: 424
         height: 43
+        font.underline: false
     }
 
     ComboBox {
@@ -60,6 +62,7 @@ Rectangle
         width: 424
         height: 48
         model: [ "WIND SENSOR", "MULTIPLE SENSORS" ]
+        currentIndex: 0
     }
 
     TextField {
@@ -70,7 +73,7 @@ Rectangle
         height: 43
     }
 
-    Text {
+    Label {
         id: element1
         x: 8
         y: 173
@@ -80,7 +83,7 @@ Rectangle
         font.pixelSize: 12
     }
 
-    Text {
+    Label {
         id: element2
         x: 8
         y: 116
@@ -115,5 +118,8 @@ Rectangle
             addEditDeviceFrame.close()
         }
     }
+
 }
+
 }
+

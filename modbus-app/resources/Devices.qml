@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.8
 import QtQuick.Controls 2.2
 //import Qt.labs.settings 1.0
 
@@ -88,7 +88,7 @@ Page {
         width: 200
         height: 60
         Row {
-            Text { text: name
+            Label { text: name
                 font.bold: true
             }
 
@@ -96,7 +96,8 @@ Page {
             {
                 width: 50
                 y: 15
-                Text {
+                Label {
+                    renderType: Text.QtRendering
                     x: 15
                     text: type
                 }
@@ -107,7 +108,8 @@ Page {
             {
                 width: 50
                 y: 30
-                Text {
+                Label {
+                    renderType: Text.QtRendering
                     x: 30
                     text: connection_type
                 }
@@ -214,14 +216,6 @@ Page {
                 spacing: 5
                 anchors.fill: parent
                 leftPadding: 10
-                Image {
-                    id : menuButtonIcon
-                    source: addButton.icon.source
-                    width: addButton.icon.width
-                    height: addButton.icon.height
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
                 Label {
                     text: addButton.text
                     font: addButton.font

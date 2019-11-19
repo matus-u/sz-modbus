@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM ubuntu:18.04
 
 RUN apt-get update \
     && apt-get install -y \
@@ -16,27 +16,32 @@ RUN apt-get update \
     && apt-get install -y \
     qt5-default \
     qtcreator \
-    pyside2-tools \
-    python3-pyside2.qtwebsockets \
-    python3-pyside2.qtcore \
-    python3-pyside2.qtwidgets \
-    python3-pyside2.qtgui \
+    python3-pyqt5 \
+    pyqt5-dev-tools \
+    qtcreator \
+    qt5-default \
+    python3-pyqt5.qtwebsockets \
+    net-tools \
     qtvirtualkeyboard-plugin \
+    python3-pyqt5.qtquick \
     qml-module-qtquick-virtualkeyboard \
-    qml-module-qt-labs-folderlistmodel \
-    net-tools
-
-RUN pip3 install umodbus
+    qtdeclarative5-dev \
+    qml-module-qtquick-controls2 \
+    libqt53dquick5 \
+    qml-module-qtquick-dialogs \
+    qml-module-qt-labs-settings \
+    qml-module-qt-labs-folderlistmodel
 
 RUN apt-get update \
     && apt-get install -y \
-    python3-pyside2.qtqml \
-    python3-pyside2.qtnetwork \
-    python3-pyside2.qtquick \
-    python3-pyside2.qtquickwidgets \
-    qtdeclarative5-dev \
-    qml-module-qtquick-controls2 \
-    python-pyside2.qtquick libqt53dquick5 \
-    qml-module-qtquick-dialogs \
-    qml-module-qt-labs-settings
+    python3-setuptools
+
+RUN apt-get update \
+    && apt-get install -y \
+    locales
+
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+RUN pip3 install umodbus
 

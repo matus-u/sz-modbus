@@ -68,7 +68,7 @@ Page {
                     x: 10
                     y: 10
                     spacing: 5
-                    Text {
+                    Label {
                         id: deviceName
                         text: "Name: " + name
                     }
@@ -106,13 +106,13 @@ Page {
             {
                 Row {
 
-                    Text {
+                    Label {
                         text: name + ":"
                     }
                 }
                 Row {
 
-                    Text {
+                    Label {
                         text: value + " " + unit
                     }
                 }

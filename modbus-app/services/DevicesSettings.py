@@ -1,6 +1,6 @@
-from PySide2 import QtWidgets
-from PySide2 import QtGui
-from PySide2 import QtCore
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui
+from PyQt5 import QtCore
 
 import json
 
@@ -15,14 +15,17 @@ class DevicesSettings(QtCore.QObject):
 
         self.settings = QtCore.QSettings(DevicesSettings.SettingsPath, DevicesSettings.SettingsFormat)
 
-    @QtCore.Slot(result=str)
+    @QtCore.pyqtSlot(result=str)
     def getDevicesConf(self):
         return self.settings.value(DevicesSettings.DevicesString, "")
 
     def getDevicesConfDict(self):
-        return json.loads(self.getDevicesConf())
+        val = self.getDevicesConf()
+        if val != "":
+            return json.loads(self.getDevicesConf())
+        return {} 
 
-    @QtCore.Slot(str)
+    @QtCore.pyqtSlot(str)
     def storeDevicesConf(self, jsonString):
         self.settings.setValue(DevicesSettings.DevicesString, jsonString)
 

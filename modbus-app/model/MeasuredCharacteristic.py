@@ -8,7 +8,8 @@ class MeasuredCharacteristic:
         CO2_VALUE = 3
         ATMOSPHERE_PREASURE = 4
         TEMPERATURE = 5
-        HUMIDITY = 5
+        HUMIDITY = 6
+        DEW_POINT = 7
 
     class CharacteristicStrings:
         NAME = "name"
