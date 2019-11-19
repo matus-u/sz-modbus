@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
+*.qmlc
+*.pro.u*
 
 modbus-app/generated/
 modbus-app/configs/
@@ -38,4 +40,5 @@ modbus-app/services/__pycache__/
 modbus-app/services/mocks/__pycache__/
 modbus-app/model/__pycache__/
 modbus-app/model/mocks/__pycache__/
+modbus-app/ui/__pycache__/
 modbus-app/translation/*qm
