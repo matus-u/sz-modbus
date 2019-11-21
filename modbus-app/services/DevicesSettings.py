@@ -23,9 +23,9 @@ class DevicesSettings(QtCore.QObject):
         val = self.getDevicesConf()
         if val != "":
             return json.loads(self.getDevicesConf())
-        return {} 
+        return []
 
     @QtCore.pyqtSlot(str)
-    def storeDevicesConf(self, jsonString):
-        self.settings.setValue(DevicesSettings.DevicesString, jsonString)
+    def storeDevicesConf(self, configuration):
+        self.settings.setValue(DevicesSettings.DevicesString, jsonDumps(configuration))
 

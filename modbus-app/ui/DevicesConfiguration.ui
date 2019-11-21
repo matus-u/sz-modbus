@@ -22,6 +22,27 @@
      <height>571</height>
     </rect>
    </property>
+   <property name="columnCount">
+    <number>3</number>
+   </property>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <column>
+    <property name="text">
+     <string>Device name</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Device type</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Device address</string>
+    </property>
+   </column>
   </widget>
   <widget class="QPushButton" name="backButton">
    <property name="geometry">
@@ -36,7 +57,7 @@
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>480</x>
@@ -47,7 +68,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="addDeviceButtpn">
+     <widget class="QPushButton" name="addDeviceButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>

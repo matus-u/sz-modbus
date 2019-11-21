@@ -10,6 +10,7 @@ def createDevice(name, address, devType):
     if devType == "MULTIPLE SENSORS":
         return MultipleMeteo(name, address)
 
+
 class ModbusDevice:
     def __init__(self, serialPort, address):
         self.address = address 

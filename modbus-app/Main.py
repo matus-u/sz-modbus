@@ -39,7 +39,7 @@ def main():
 
     modbusController.start()
 
-    application = ApplicationWindow.ApplicationWindow()
+    application = ApplicationWindow.ApplicationWindow(devicesSettings)
 
     application.show()
     ret = app.exec_()

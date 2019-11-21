@@ -6,16 +6,18 @@ from ui.DevicesConfigurationWidget import DevicesConfigurationWidget
 
 class ApplicationWindow(QtWidgets.QMainWindow):
 
-    def __init__(self):
+    def __init__(self, deviceSettings):
         super(ApplicationWindow, self).__init__()
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        #self.showFullScreen()
+        self.showFullScreen()
         self.ui.deviceConfButton.clicked.connect(self.onDevicesConfigurationButton)
         self.ui.generalSettingsButton.clicked.connect(self.onLanguageSettings)
         self.ui.groupsConfButton.clicked.connect(self.onGroupsConfigurationButton)
         self.ui.networkSettingsButton.clicked.connect(self.onNetworkSettingsButton)
+
+        self.deviceSettings = deviceSettings
 
     def clearStackedWidget(self):
         if (self.ui.stackedWidget.count() != 0):
@@ -31,7 +33,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def onDevicesConfigurationButton(self):
         self.clearStackedWidget()
-        self.ui.stackedWidget.addWidget(DevicesConfigurationWidget())
+        self.ui.stackedWidget.addWidget(DevicesConfigurationWidget(self.deviceSettings.getDevicesConfDict()))
 
     def onNetworkSettingsButton(self):
         self.clearStackedWidget()
