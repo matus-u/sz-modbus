@@ -19,3 +19,8 @@ class AddEditDeviceWindow(QtWidgets.QDialog):
     def deviceConf(self):
         return DeviceDictAccessor.createDict(self.ui.deviceNameEdit.text(), self.ui.deviceAddress.text(), self.ui.deviceTypeComboBox.currentText())
 
+    def setDeviceConfData(self, config):
+        self.ui.deviceNameEdit.setText(config[DeviceDictAccessor.NAME])
+        self.ui.deviceAddress.setValue(int(config[DeviceDictAccessor.ADDRESS]))
+        self.ui.deviceTypeComboBox.setCurrentIndex(DeviceTypes.getTypes().index(config[DeviceDictAccessor.DEV_TYPE]))
+

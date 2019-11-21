@@ -9,6 +9,6 @@ RESOURCES += resources/*.qrc
 
 FORMS += ui/*.ui \
     ui/MainWindow.ui \
-    ui/DevicesConfiguration.ui \
-    ui/AddEditDevice.ui
+    ui/AddEditDevice.ui \
+    ui/DevicesConfiguration.ui
 
