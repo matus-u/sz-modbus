@@ -23,10 +23,20 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
         self.ui.removeDeviceButton.setEnabled(False)
         self.ui.editDeviceButton.setEnabled(False)
 
+        self.populateConfiguration()
+
+    def populateConfiguration(self):
+        self.ui.devicesWidget.setRowCount(len(self.configuration))
+        for index, item in enumerate(self.configuration):
+            self.ui.devicesWidget.setItem(index , 0, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.NAME]))
+            self.ui.devicesWidget.setItem(index , 1, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
+            self.ui.devicesWidget.setItem(index , 2, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
+
     def onAddButton(self):
         w = AddEditDeviceWindow.AddEditDeviceWindow(self)
         w.finished.connect(lambda retCode: self.onAddFinished(w, retCode))
         Helpers.openSubWindow(self, w)
+        w.move(self.pos().x(), self.pos().y())
 
     def onAddFinished(self, window, code):
         if code:
@@ -56,6 +66,7 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
         w.setDeviceConfData(self.configuration[index])
         w.finished.connect(lambda retCode: self.onEditFinished(w, retCode, index))
         Helpers.openSubWindow(self, w)
+        w.move(self.pos().x(), self.pos().y())
 
     def onEditFinished(self, window, code, index):
         if code:
@@ -63,4 +74,8 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
             self.ui.devicesWidget.setItem(index , 0, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.NAME]))
             self.ui.devicesWidget.setItem(index , 1, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
             self.ui.devicesWidget.setItem(index , 2, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
+
+
+    def getConfiguration(self):
+        return self.configuration
 

@@ -27,5 +27,5 @@ class DevicesSettings(QtCore.QObject):
 
     @QtCore.pyqtSlot(str)
     def storeDevicesConf(self, configuration):
-        self.settings.setValue(DevicesSettings.DevicesString, jsonDumps(configuration))
+        self.settings.setValue(DevicesSettings.DevicesString, json.dumps(configuration))
 

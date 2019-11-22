@@ -13,7 +13,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         #self.showFullScreen()
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint);
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.ui.deviceConfButton.clicked.connect(self.onDevicesConfigurationButton)
         self.ui.generalSettingsButton.clicked.connect(self.onLanguageSettings)
         self.ui.groupsConfButton.clicked.connect(self.onGroupsConfigurationButton)
@@ -21,27 +21,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.deviceSettings = deviceSettings
 
-    def clearStackedWidget(self):
-        if (self.ui.stackedWidget.count() != 0):
-            widget = self.ui.stackedWidget.currentWidget()
-            self.ui.stackedWidget.removeWidget(widget)
-            widget.deleteLater()
-
     def onGroupsConfigurationButton(self):
-        self.clearStackedWidget()
+        pass
 
-    def onLanguageSettings(self):
-        self.clearStackedWidget()
 
     def onDevicesConfigurationButton(self):
-        self.clearStackedWidget()
-        #self.ui.stackedWidget.addWidget(DevicesConfigurationWidget(self.deviceSettings.getDevicesConfDict()))
-
         w = DevicesConfigurationWindow(self, self.deviceSettings.getDevicesConfDict())
-        w.finished.connect(lambda retCode: print(retCode) )
+        w.finished.connect(lambda retCode: self.onDevicesConfigurationFinished(retCode, w.getConfiguration()) )
         Helpers.openSubWindow(self, w)
         w.move(self.pos().x(), self.pos().y())
 
+    def onDevicesConfigurationFinished(self, retCode, configuration):
+        if retCode:
+            self.deviceSettings.storeDevicesConf(configuration)
+
     def onNetworkSettingsButton(self):
-        self.clearStackedWidget()
+        pass
+
+    def onLanguageSettings(self):
+        pass
 
