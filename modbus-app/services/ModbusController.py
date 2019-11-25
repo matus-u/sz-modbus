@@ -4,16 +4,15 @@ from PyQt5 import QtCore
 
 from services.DevicesSettings import DevicesSettings
 from services.TimerService import TimerStatusObject
-from model import ModbusDevice
 
 import os
 
 if os.getenv('DEVICES_ATTACHED', False) == False:
     from services.mocks import ModbusDialog
-    from model.mocks import ModbusDevice
 else:
     from services import ModbusDialog
-    from model import ModbusDevice
+
+from model import ModbusDeviceType
 
 class ModbusProxyController(QtCore.QObject):
 
@@ -50,7 +49,7 @@ class ModbusController(TimerStatusObject):
     def newDevicesConfiguration(self, configuration):
         self.devices.clear()
         for device in configuration:
-            self.devices.append(ModbusDevice.createDevice(device["name"], int(device["address"]), device["type"]))
+            self.devices.append(ModbusDeviceType.DeviceTypes.createDevice(device["name"], int(device["address"]), device["type"]))
 
     def onTimeout(self):
         measuredValues = {} 

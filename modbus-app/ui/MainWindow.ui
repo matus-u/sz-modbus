@@ -121,14 +121,10 @@
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget">
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="currentIndex">
-       <number>-1</number>
-      </property>
-     </widget>
+     <widget class="QTreeView" name="treeView"/>
+    </item>
+    <item>
+     <widget class="QColumnView" name="columnView"/>
     </item>
    </layout>
   </widget>
