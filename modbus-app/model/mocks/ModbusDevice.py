@@ -38,7 +38,7 @@ class WindSensor(ModbusDevice):
         super().__init__(serialPort, address)
     
     def getCharacteristics(self, serialPort):
-        chars = getMetaEmptyCharacteristics()
+        chars = self.getMetaEmptyCharacteristics()
         chars[0][MeasuredCharacteristic.CharacteristicStrings.VALUE] = str(getNumber())
         return chars
 
@@ -54,7 +54,7 @@ class MultipleMeteo(ModbusDevice):
         super().__init__(serialPort, address)
     
     def getCharacteristics(self, serialPort):
-        chars = getMetaEmptyCharacteristics()
+        chars = self.getMetaEmptyCharacteristics()
         chars[0][MeasuredCharacteristic.CharacteristicStrings.VALUE] = str(getNumber())
         chars[1][MeasuredCharacteristic.CharacteristicStrings.VALUE] = str(getNumber())
         chars[2][MeasuredCharacteristic.CharacteristicStrings.VALUE] = str(getNumber())

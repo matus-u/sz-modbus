@@ -2,6 +2,8 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtQuick import QQuickView
 from PyQt5.QtCore import QUrl, QObject, QThread
 from PyQt5.QtQml import QQmlApplicationEngine
+from PyQt5 import QtCore
+
 
 from generated import qml
 
@@ -29,17 +31,15 @@ def main():
     modbusController = ModbusController()
 
     timerService.addTimerWorker(modbusController)
-    modbusProxyController = modbusController.getProxy(devicesSettings)
-
-    #engine = QQmlApplicationEngine ()
-    #engine.rootContext().setContextProperty("devicesSettings", devicesSettings)
-    #engine.rootContext().setContextProperty("modbusProxy", modbusProxyController)
-    #engine.load(QUrl("qrc:/main.qml"))
-    #modbusProxyController.newLiveDataArrived.connect(engine.rootObjects()[0].dataArrived)
 
     modbusController.start()
 
     application = ApplicationWindow.ApplicationWindow(devicesSettings)
+
+    modbusController.newMeasuredValues.connect(application.onNewLiveData, QtCore.Qt.QueuedConnection)
+    devicesSettings.newDeviceConfigPrepared.connect(modbusController.newDevicesConfiguration, QtCore.Qt.QueuedConnection)
+    devicesSettings.signalConfig(devicesSettings.getDevicesConfDict())
+
 
     application.show()
     ret = app.exec_()

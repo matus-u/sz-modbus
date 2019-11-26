@@ -27,7 +27,7 @@ class WindSensor(ModbusDevice):
         super().__init__(serialPort, address)
     
     def getCharacteristics(self, serialPort):
-        chars = getMetaEmptyCharacteristics()
+        chars = self.getMetaEmptyCharacteristics()
         message = rtu.read_holding_registers(slave_id=self.address, starting_address=0, quantity=1)
         response = rtu.send_message(message, serialPort)
         print (response)
@@ -46,7 +46,7 @@ class MultipleMeteo(ModbusDevice):
         super().__init__(serialPort, address)
     
     def getCharacteristics(self, serialPort):
-        chars = getMetaEmptyCharacteristics()
+        chars = self.getMetaEmptyCharacteristics()
         message = rtu.read_holding_registers(slave_id=self.address, starting_address=0, quantity=8)
         response = rtu.send_message(message, serialPort)
         print (response)

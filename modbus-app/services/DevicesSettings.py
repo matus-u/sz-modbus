@@ -10,6 +10,8 @@ class DevicesSettings(QtCore.QObject):
 
     DevicesString = "Devices"
 
+    newDeviceConfigPrepared = QtCore.pyqtSignal('PyQt_PyObject')
+
     def __init__(self):
         super().__init__()
 
@@ -28,4 +30,9 @@ class DevicesSettings(QtCore.QObject):
     @QtCore.pyqtSlot(str)
     def storeDevicesConf(self, configuration):
         self.settings.setValue(DevicesSettings.DevicesString, json.dumps(configuration))
+        self.signalConfig(configuration)
+
+    def signalConfig(self, configuration):
+        self.newDeviceConfigPrepared.emit(configuration)
+        
 

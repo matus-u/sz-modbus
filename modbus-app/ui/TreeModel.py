@@ -7,7 +7,6 @@ from model.MeasuredCharacteristic import MeasuredCharacteristic
 
 class TreeItem(object):
     def __init__(self, data, parent=None):
-        print (data)
         self.parentItem = parent
         self.itemData = data
         self.childItems = []
@@ -20,6 +19,12 @@ class TreeItem(object):
 
     def childCount(self):
         return len(self.childItems)
+
+    def children(self):
+        return self.childItems
+
+    def items(self):
+        return self.itemData
 
     def columnCount(self):
         return len(self.itemData)
@@ -123,5 +128,16 @@ class TreeModel(QAbstractItemModel):
                 charItem = TreeItem([ "", characteristic[MeasuredCharacteristic.CharacteristicStrings.NAME], characteristic[MeasuredCharacteristic.CharacteristicStrings.VALUE], characteristic[MeasuredCharacteristic.CharacteristicStrings.UNIT]], devItem)
                 devItem.appendChild(charItem)
             rootItem.appendChild(devItem)
-        
+
+    def updateLiveData(self, liveData):
+        for device, measuredValues in liveData.items():
+            for item in self.rootItem.children():
+                if device == item.data(0):
+                    self.updateDeviceLiveData(item, measuredValues)
+
+    def updateDeviceLiveData(self, deviceItem, measuredValues):
+        for index, valueItem in enumerate(deviceItem.children()):
+            if index > 0:
+                valueItem.items()[2] = measuredValues[index-1][MeasuredCharacteristic.CharacteristicStrings.VALUE]
+        self.dataChanged.emit(self.createIndex(1, 2, deviceItem.child(1)), self.createIndex(deviceItem.childCount()-1, 2, deviceItem.child(deviceItem.childCount()-1)))
 
