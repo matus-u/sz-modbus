@@ -1,12 +1,10 @@
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtQuick import QQuickView
-from PyQt5.QtCore import QUrl, QObject, QThread
-from PyQt5.QtQml import QQmlApplicationEngine
+from PyQt5.QtCore import QObject, QThread
 from PyQt5 import QtCore
 
 
-from generated import qml
-
+from services.AppSettings import AppSettings
+from services.LoggingService import LoggingService
 from services.TimerService import TimerService
 from services.DevicesSettings import DevicesSettings
 from services.ModbusController import ModbusController
@@ -24,7 +22,10 @@ def main():
     os.environ["QT_VIRTUALKEYBOARD_STYLE"]="modbus_app_kb"
     #os.environ["QT_LOGGING_RULES"]="qt.virtualkeyboard=true"
 
-    app = QApplication([])
+    LoggingService.init()
+    app = QApplication(sys.argv)
+    AppSettings.restoreLanguage()
+    AppSettings.restoreTimeZone()
 
     devicesSettings = DevicesSettings()
     timerService = TimerService()
@@ -42,8 +43,8 @@ def main():
 
 
     application.show()
-    ret = app.exec_()
 
+    ret = app.exec_()
     modbusController.stop()
     timerService.quit()
     sys.exit(ret)

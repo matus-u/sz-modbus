@@ -4,6 +4,8 @@ from PyQt5 import QtCore
 
 class AppSettingsNotifier(QtCore.QObject):
 
+    dataServerChanged = QtCore.pyqtSignal(str)
+
     def __init__(self):
         super().__init__()
 
@@ -26,6 +28,7 @@ class AppSettings:
     DeviceNameString = "DeviceName"
     ServicePhoneString = "ServicePhone"
     DescString = "Description"
+    DataServerString = "DataServer"
 
     Notifier = AppSettingsNotifier()
 
@@ -72,6 +75,10 @@ class AppSettings:
     def getCurrentTimeZoneIndex():
         return AppSettings.TimeZoneList.index(AppSettings.actualTimeZone())
 
+    @staticmethod
+    def actualDataServer(appSettings = None):
+        return AppSettings.checkSettingsParam(appSettings).value(AppSettings.DataServerString, "")
+
     @classmethod
     def loadLanguageByIndex(cls, index):
         cls._loadLanguage(AppSettings.LanguageList[index])
@@ -86,10 +93,13 @@ class AppSettings:
         QtCore.QCoreApplication.processEvents()
 
     @classmethod
-    def storeSettings(cls, languageIndex, timeZoneIndex, currencyIndex):
+    def storeSettings(cls, languageIndex, timeZoneIndex, dataServer):
         settings = QtCore.QSettings(AppSettings.SettingsPath, AppSettings.SettingsFormat)
         settings.setValue(AppSettings.LanguageString, AppSettings.LanguageList[languageIndex])
         settings.setValue(AppSettings.TimeZoneString, AppSettings.TimeZoneList[timeZoneIndex])
+        if dataServer != AppSettings.actualDataServer(settings):
+            settings.setValue(AppSettings.DataServerString, dataServer)
+            cls.getNotifier().dataServerChanged.emit(dataServer)
         settings.sync()
         QtCore.QProcess.execute("scripts/set-time-zone.sh", [AppSettings.TimeZoneList[timeZoneIndex]])
 
