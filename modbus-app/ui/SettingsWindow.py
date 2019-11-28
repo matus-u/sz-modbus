@@ -5,7 +5,9 @@ from generated.Settings import Ui_Settings
 
 from services.AppSettings import AppSettings
 
-class SettingsWindow(QtWidgets.QDialog):
+from ui import Helpers
+
+class SettingsWindow(Helpers.TransparentDialog):
     def __init__(self, parent):
         super(SettingsWindow, self).__init__(parent)
         self.ui = Ui_Settings()

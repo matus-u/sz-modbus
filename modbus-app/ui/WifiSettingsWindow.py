@@ -1,12 +1,13 @@
 from PyQt5 import QtWidgets
-from PyQt5 import QtGui
 from PyQt5 import QtCore
 from generated.WifiSettings import Ui_WifiSettings
 
 from services.AppSettings import AppSettings
 from services.WirelessService import WirelessService, WirelessScan
 
-class WifiSettingsWindow(QtWidgets.QDialog):
+from ui import Helpers
+
+class WifiSettingsWindow(Helpers.TransparentDialog):
     def __init__(self, parent, wirelessService):
         super(WifiSettingsWindow, self).__init__(parent)
         self.ui = Ui_WifiSettings()
