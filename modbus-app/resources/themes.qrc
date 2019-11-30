@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>dark-orange.qss</file>
+        <file>elegant-dark.qss</file>
+        <file>images/checkbox.png</file>
+        <file>images/down_arrow.png</file>
+        <file>images/handle.png</file>
+    </qresource>
+</RCC>

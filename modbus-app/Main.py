@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QObject, QThread
 from PyQt5 import QtCore
+from PyQt5 import QtWidgets
 
 
 from services.AppSettings import AppSettings
@@ -14,6 +15,16 @@ from ui import ApplicationWindow
 import os
 import sys
 
+from generated import themes
+
+def setStyle(app):
+    QApplication.setStyle(QtWidgets.QStyleFactory.create("motif"))
+    styleFile = QtCore.QFile(":/dark-orange.qss")
+    #styleFile = QtCore.QFile(":/elegant-dark.qss")
+    styleFile.open(QtCore.QIODevice.ReadOnly)
+    data = styleFile.readAll()
+    print (data)
+    app.setStyleSheet(str(data, encoding="utf-8"))
 
 def main():
     os.environ["QML2_IMPORT_PATH"]="resources/kbstyle"
@@ -24,6 +35,8 @@ def main():
 
     LoggingService.init()
     app = QApplication(sys.argv)
+    setStyle(app)
+
     AppSettings.restoreLanguage()
     AppSettings.restoreTimeZone()
 
