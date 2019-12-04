@@ -77,14 +77,24 @@
   <widget class="QPushButton" name="backButton">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>620</y>
+     <x>190</x>
+     <y>610</y>
      <width>141</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>Back</string>
+    <string>Cancel</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/themes.qrc">
+     <normaloff>:/images/cancel.png</normaloff>:/images/cancel.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
@@ -108,6 +118,16 @@
       <property name="text">
        <string>Add device</string>
       </property>
+      <property name="icon">
+       <iconset resource="../resources/themes.qrc">
+        <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
      </widget>
     </item>
     <item>
@@ -120,6 +140,16 @@
       </property>
       <property name="text">
        <string>Edit device</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../resources/themes.qrc">
+        <normaloff>:/images/pencil.png</normaloff>:/images/pencil.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
      </widget>
     </item>
@@ -134,6 +164,16 @@
       <property name="text">
        <string>Remove device</string>
       </property>
+      <property name="icon">
+       <iconset resource="../resources/themes.qrc">
+        <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
      </widget>
     </item>
    </layout>
@@ -141,18 +181,30 @@
   <widget class="QPushButton" name="applyButton">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>620</y>
+     <x>30</x>
+     <y>610</y>
      <width>141</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>Apply</string>
+    <string>Ok</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/themes.qrc">
+     <normaloff>:/images/ok.png</normaloff>:/images/ok.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources/themes.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>backButton</sender>

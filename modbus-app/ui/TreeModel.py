@@ -6,10 +6,11 @@ from model import ModbusDeviceType
 from model.MeasuredCharacteristic import MeasuredCharacteristic
 
 class TreeItem(object):
-    def __init__(self, data, parent=None):
+    def __init__(self, data, parent=None, ico=None):
         self.parentItem = parent
         self.itemData = data
         self.childItems = []
+        self.ico=ico
 
     def appendChild(self, item):
         self.childItems.append(item)
@@ -34,6 +35,12 @@ class TreeItem(object):
             return self.itemData[column]
         except IndexError:
             return None
+
+    def icon(self, column):
+        if self.ico:
+            if column == 2:
+                return self.ico
+        return None
 
     def parent(self):
         return self.parentItem
@@ -62,12 +69,16 @@ class TreeModel(QAbstractItemModel):
         if not index.isValid():
             return None
 
-        if role != Qt.DisplayRole:
-            return None
+        if role == Qt.DisplayRole:
+            item = index.internalPointer()
+            return item.data(index.column())
+    
+        if role == Qt.DecorationRole:
+            item = index.internalPointer()
+            return item.icon(index.column())
 
-        item = index.internalPointer()
-
-        return item.data(index.column())
+        return None
+        
 
     def flags(self, index):
         if not index.isValid():
@@ -125,7 +136,7 @@ class TreeModel(QAbstractItemModel):
             devTypeItem = TreeItem([dev[ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE], "","", ""], devItem)
             devItem.appendChild(devTypeItem)
             for characteristic in ModbusDeviceType.DeviceTypes.getMetaCharacteristics(dev[ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]):
-                charItem = TreeItem([ "", characteristic[MeasuredCharacteristic.CharacteristicStrings.NAME], characteristic[MeasuredCharacteristic.CharacteristicStrings.VALUE], characteristic[MeasuredCharacteristic.CharacteristicStrings.UNIT]], devItem)
+                charItem = TreeItem([ "", characteristic[MeasuredCharacteristic.CharacteristicStrings.NAME], characteristic[MeasuredCharacteristic.CharacteristicStrings.VALUE], characteristic[MeasuredCharacteristic.CharacteristicStrings.UNIT]], devItem, MeasuredCharacteristic.createIcon(characteristic[MeasuredCharacteristic.CharacteristicStrings.CHARACTERISTIC_TYPE]))
                 devItem.appendChild(charItem)
             rootItem.appendChild(devItem)
 

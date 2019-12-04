@@ -21,6 +21,23 @@ def get_serial_port(baud):
 
     return port
 
+
+serial_port_9600 = get_serial_port(9600)
+message = rtu.read_holding_registers(slave_id=1, starting_address=0, quantity=1)
+response = rtu.send_message(message, serial_port_9600)
+print (response)
+
+serial_port_9600.close()
+
+serial_port_9600 = get_serial_port(9600)
+message = rtu.read_holding_registers(slave_id=4, starting_address=0, quantity=10)
+response = rtu.send_message(message, serial_port_9600)
+print (response)
+
+serial_port_9600.close()
+quit()
+
+
 serial_port_9600 = get_serial_port(9600)
 #serial_port_115200 = get_serial_port(115200)
 
@@ -35,9 +52,14 @@ serial_port_9600 = get_serial_port(9600)
 #message = rtu.write_multiple_registers(slave_id=96, starting_address=0, values=[2, 0x476f, 0x6f64, 0x2064])
 # Response depends on Modbus function code. This particular returns the
 # amount of coils written, in this case it is.
-message = rtu.read_holding_registers(slave_id=1, starting_address=0, quantity=1)
-response = rtu.send_message(message, serial_port_9600)
-print (response)
+for i in range (0,256):
+    try:
+        message = rtu.read_holding_registers(slave_id=i, starting_address=0, quantity=10)
+        response = rtu.send_message(message, serial_port_9600)
+        print (i)
+        print (response)
+    except:
+        pass
 
 
 serial_port_9600.close()

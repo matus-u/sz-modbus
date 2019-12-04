@@ -38,6 +38,7 @@ RUN apt-get update \
 
 RUN apt-get update \
     && apt-get install -y \
+    qt5-style-plugins \
     locales
 
 RUN locale-gen en_US.UTF-8

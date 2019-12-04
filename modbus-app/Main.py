@@ -20,10 +20,8 @@ from generated import themes
 def setStyle(app):
     QApplication.setStyle(QtWidgets.QStyleFactory.create("motif"))
     styleFile = QtCore.QFile(":/dark-orange.qss")
-    #styleFile = QtCore.QFile(":/elegant-dark.qss")
     styleFile.open(QtCore.QIODevice.ReadOnly)
     data = styleFile.readAll()
-    print (data)
     app.setStyleSheet(str(data, encoding="utf-8"))
 
 def main():
