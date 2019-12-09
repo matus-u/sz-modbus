@@ -1,4 +1,5 @@
 class DeviceDictAccessor:
+    ID = "Id"
     NAME = "Name"
     ADDRESS = "Address"
     DEV_TYPE = "DevType"

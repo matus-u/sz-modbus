@@ -8,10 +8,12 @@ from ui import Helpers
 
 class AddEditDeviceWindow(Helpers.TransparentDialog):
 
-    def __init__(self, parent):
+    def __init__(self, parent, editMode = False):
         super(AddEditDeviceWindow, self).__init__(parent)
         self.ui = Ui_AddEditDevice()
         self.ui.setupUi(self)
+        if editMode:
+            self.ui.deviceTypeComboBox.setEnabled(False)
 
         self.ui.deviceTypeModel = QtCore.QStringListModel(DeviceTypes.getTypes())
         self.ui.deviceTypeComboBox.setModel(self.ui.deviceTypeModel)

@@ -9,6 +9,7 @@ from services.LoggingService import LoggingService
 from services.TimerService import TimerService
 from services.DevicesSettings import DevicesSettings
 from services.ModbusController import ModbusController
+from services.GuidTracker import GuidTracker
 
 from ui import ApplicationWindow
 
@@ -37,6 +38,8 @@ def main():
 
     AppSettings.restoreLanguage()
     AppSettings.restoreTimeZone()
+
+    guidTracker = GuidTracker()
 
     devicesSettings = DevicesSettings()
     timerService = TimerService()

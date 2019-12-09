@@ -40,7 +40,9 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
 
     def onAddFinished(self, window, code):
         if code:
-            self.configuration.append(window.deviceConf())
+            d = window.deviceConf()
+            d.update({ ModbusDeviceDict.DeviceDictAccessor.ID : QtCore.QUuid.createUuid().toString() })
+            self.configuration.append(d)
             self.ui.devicesWidget.insertRow(self.ui.devicesWidget.rowCount())
             rowNumber = self.ui.devicesWidget.rowCount()
             self.ui.devicesWidget.setItem(rowNumber-1 , 0, QtWidgets.QTableWidgetItem(self.configuration[rowNumber-1][ModbusDeviceDict.DeviceDictAccessor.NAME]))
@@ -61,7 +63,7 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
         self.ui.devicesWidget.removeRow(index)
 
     def onEditButton(self):
-        w = AddEditDeviceWindow.AddEditDeviceWindow(self)
+        w = AddEditDeviceWindow.AddEditDeviceWindow(self, editMode = True)
         index = self.ui.devicesWidget.currentRow()
         w.setDeviceConfData(self.configuration[index])
         w.finished.connect(lambda retCode: self.onEditFinished(w, retCode, index))
@@ -70,7 +72,7 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
 
     def onEditFinished(self, window, code, index):
         if code:
-            self.configuration[index] = window.deviceConf()
+            self.configuration[index].update(window.deviceConf())
             self.ui.devicesWidget.setItem(index , 0, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.NAME]))
             self.ui.devicesWidget.setItem(index , 1, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
             self.ui.devicesWidget.setItem(index , 2, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
