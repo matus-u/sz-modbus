@@ -38,7 +38,7 @@ class TreeItem(object):
 
     def icon(self, column):
         if self.ico:
-            if column == 2:
+            if column == 1:
                 return self.ico
         return None
 
@@ -76,6 +76,10 @@ class TreeModel(QAbstractItemModel):
         if role == Qt.DecorationRole:
             item = index.internalPointer()
             return item.icon(index.column())
+
+        if role == Qt.TextAlignmentRole:
+            if index.column() == 2:
+                return Qt.AlignRight | Qt.AlignVCenter;
 
         return None
         

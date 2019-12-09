@@ -19,12 +19,13 @@ class SettingsWindow(Helpers.TransparentDialog):
         self.ui.timeZoneCombobox.setCurrentIndex(AppSettings.getCurrentTimeZoneIndex())
         self.ui.languageCombobox.currentIndexChanged.connect(self.onLanguageComboboxChanged)
         self.ui.dataServerAddress.setText(AppSettings.actualDataServer())
+        self.ui.deviceNameEdit.setText(AppSettings.actualDeviceName())
 
     def onLanguageComboboxChanged(self, index):
         AppSettings.loadLanguageByIndex(index)
 
     def onOkButton(self):
-        AppSettings.storeSettings(self.ui.languageCombobox.currentIndex(), self.ui.timeZoneCombobox.currentIndex(), self.ui.dataServerAddress.text())
+        AppSettings.storeSettings(self.ui.languageCombobox.currentIndex(), self.ui.timeZoneCombobox.currentIndex(), self.ui.dataServerAddress.text(), self.ui.deviceNameEdit.text())
         self.accept()
 
     def onCancelButton(self):

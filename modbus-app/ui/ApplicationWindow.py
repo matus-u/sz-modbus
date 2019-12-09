@@ -44,6 +44,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def resetModel(self):
         self.model = TreeModel.TreeModel(self.deviceSettings.getDevicesConfDict(), [self.tr("Device"), self.tr("Char. name"), self.tr("Char. value"), self.tr("Char. unit")])
         self.ui.treeView.setModel(self.model)
+        self.ui.treeView.setColumnWidth(1, 200)
+        self.ui.treeView.setColumnWidth(2, 100)
 
     def onDevicesConfigurationButton(self):
         w = DevicesConfigurationWindow(self, self.deviceSettings.getDevicesConfDict())

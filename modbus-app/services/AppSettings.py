@@ -5,6 +5,7 @@ from PyQt5 import QtCore
 class AppSettingsNotifier(QtCore.QObject):
 
     dataServerChanged = QtCore.pyqtSignal(str)
+    deviceNameChanged = QtCore.pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -79,6 +80,10 @@ class AppSettings:
     def actualDataServer(appSettings = None):
         return AppSettings.checkSettingsParam(appSettings).value(AppSettings.DataServerString, "")
 
+    @staticmethod
+    def actualDeviceName(appSettings = None):
+        return AppSettings.checkSettingsParam(appSettings).value(AppSettings.DeviceNameString, "")
+
     @classmethod
     def loadLanguageByIndex(cls, index):
         cls._loadLanguage(AppSettings.LanguageList[index])
@@ -93,13 +98,18 @@ class AppSettings:
         QtCore.QCoreApplication.processEvents()
 
     @classmethod
-    def storeSettings(cls, languageIndex, timeZoneIndex, dataServer):
+    def storeSettings(cls, languageIndex, timeZoneIndex, dataServer, deviceName):
         settings = QtCore.QSettings(AppSettings.SettingsPath, AppSettings.SettingsFormat)
         settings.setValue(AppSettings.LanguageString, AppSettings.LanguageList[languageIndex])
         settings.setValue(AppSettings.TimeZoneString, AppSettings.TimeZoneList[timeZoneIndex])
         if dataServer != AppSettings.actualDataServer(settings):
             settings.setValue(AppSettings.DataServerString, dataServer)
             cls.getNotifier().dataServerChanged.emit(dataServer)
+
+        if deviceName != AppSettings.actualDeviceName(settings):
+            settings.setValue(AppSettings.DeviceNameString, deviceName)
+            cls.getNotifier().deviceNameChanged.emit(deviceName)
+
         settings.sync()
         QtCore.QProcess.execute("scripts/set-time-zone.sh", [AppSettings.TimeZoneList[timeZoneIndex]])
 
@@ -123,33 +133,6 @@ class AppSettings:
     @staticmethod
     def actualWirelessPassword(appSettings = None):
         return AppSettings.checkWifiSettingsParam(appSettings).value(AppSettings.WirelessPassString, "")
-
-    @staticmethod
-    def actualDeviceName(appSettings = None):
-        return AppSettings.checkSettingsParam(appSettings).value(AppSettings.DeviceNameString, "")
-
-    @staticmethod
-    def actualDescription(appSettings = None):
-        return AppSettings.checkSettingsParam(appSettings).value(AppSettings.DescString, "")
-
-    @staticmethod
-    def actualServicePhone(appSettings = None):
-        return AppSettings.checkSettingsParam(appSettings).value(AppSettings.ServicePhoneString, "")
-
-    @classmethod
-    def storeServerSettings(cls, name, desc, servicePhone):
-        settings = QtCore.QSettings(AppSettings.SettingsPath, AppSettings.SettingsFormat)
-        if name is not None:
-            if name != AppSettings.actualDeviceName(settings):
-                settings.setValue(AppSettings.DeviceNameString, name)
-                cls.getNotifier().deviceNameChanged.emit(name)
-        if desc is not None:
-            settings.setValue(AppSettings.DescString, desc)
-        if servicePhone is not None:
-            if servicePhone != AppSettings.actualServicePhone(settings):
-                settings.setValue(AppSettings.ServicePhoneString, servicePhone)
-                cls.getNotifier().servicePhoneChanged.emit(servicePhone)
-        settings.sync()
 
     @classmethod
     def getNotifier(cls):
