@@ -10,6 +10,7 @@ from services.TimerService import TimerService
 from services.DevicesSettings import DevicesSettings
 from services.ModbusController import ModbusController
 from services.GuidTracker import GuidTracker
+from services.WebSocketStatus import WebSocketStatus
 
 from ui import ApplicationWindow
 
@@ -39,27 +40,37 @@ def main():
     AppSettings.restoreLanguage()
     AppSettings.restoreTimeZone()
 
+    #Settings
     guidTracker = GuidTracker()
-
     devicesSettings = DevicesSettings()
+
+    #Remote update
+    updateStatusTimerService = TimerService()
+    webUpdateStatus = WebSocketStatus(guidTracker.getGuid())
+    updateStatusTimerService.addTimerWorker(webUpdateStatus)
+
+    #Local data
     timerService = TimerService()
     modbusController = ModbusController()
-
     timerService.addTimerWorker(modbusController)
 
     modbusController.start()
 
+    #MainWindow
     application = ApplicationWindow.ApplicationWindow(devicesSettings)
 
     modbusController.newMeasuredValues.connect(application.onNewLiveData, QtCore.Qt.QueuedConnection)
     devicesSettings.newDeviceConfigPrepared.connect(modbusController.newDevicesConfiguration, QtCore.Qt.QueuedConnection)
     devicesSettings.signalConfig(devicesSettings.getDevicesConfDict())
 
-
+    #Start the app
     application.show()
+    webUpdateStatus.asyncConnect()
 
     ret = app.exec_()
     modbusController.stop()
+    webUpdateStatus.asyncDisconnect()
+    updateStatusTimerService.quit()
     timerService.quit()
     sys.exit(ret)
 
