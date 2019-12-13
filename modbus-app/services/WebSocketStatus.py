@@ -44,13 +44,13 @@ class WebSocketStatus(TimerService.TimerStatusObject):
 
     def onTimeout(self):
         logger = LoggingService.getLogger()
-        logger.info("Update state to server with id: %s" % self.URL)
+        #logger.info("Update state to server with id: %s" % self.URL)
 
         ## APPLICATION SPECIFIC MESSAGE CREATION 
-        data = {}
-        textMsg = self.createPhxMessage("update-status", data)
-        LoggingService.getLogger().debug("Data to websocket %s" % textMsg)
-        self.websocket.sendTextMessage(textMsg)
+        #data = {"id": self.uuid, "name", self.deviceName, "configuration" : }
+        #textMsg = self.createPhxMessage("configuration-message", data)
+        #LoggingService.getLogger().debug("Data to websocket %s" % textMsg)
+        #self.websocket.sendTextMessage(textMsg)
 
     def forceDisconnect(self):
         if self.websocket:
@@ -76,8 +76,8 @@ class WebSocketStatus(TimerService.TimerStatusObject):
     def onConnect(self):
         LoggingService.getLogger().info("Connected to websocket %s" % self.URL)
         self.websocket.sendTextMessage(self.createPhxMessage( "phx_join", ""));
-        self.startTimerSync()
-        self.onTimeout()
+        #self.startTimerSync()
+        #self.onTimeout()
 
     def onTextMessageReceived(self, js):
         LoggingService.getLogger().debug("Data from websocket %s" % js)
@@ -85,7 +85,7 @@ class WebSocketStatus(TimerService.TimerStatusObject):
         print (text)
 
     def onDisconnect(self):
-        self.stopTimerSync()
+        #self.stopTimerSync()
         LoggingService.getLogger().info("Disconnected from websocket %s" % self.URL)
         self.scheduleConnect()
 
@@ -101,3 +101,13 @@ class WebSocketStatus(TimerService.TimerStatusObject):
                             "payload" : payload,
                             "ref" : str(self.ref)
         })
+
+    def onNewLiveData(self, liveData):
+        data = {"id": self.uuid, "name": self.deviceName, "data" : liveData}
+        print (data)
+
+        if self.websocket and (self.websocket.state() == QtNetwork.QAbstractSocket.ConnectedState):
+            textMsg = self.createPhxMessage("data-message", data)
+            LoggingService.getLogger().debug("Data to websocket %s" % textMsg)
+            self.websocket.sendTextMessage(textMsg)
+

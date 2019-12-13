@@ -3,6 +3,7 @@ class DeviceDictAccessor:
     NAME = "Name"
     ADDRESS = "Address"
     DEV_TYPE = "DevType"
+    LIVE_DATA = "LiveData"
 
     @staticmethod
     def createDict(name, address, devType):

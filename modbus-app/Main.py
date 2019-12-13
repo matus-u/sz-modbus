@@ -63,6 +63,8 @@ def main():
     devicesSettings.newDeviceConfigPrepared.connect(modbusController.newDevicesConfiguration, QtCore.Qt.QueuedConnection)
     devicesSettings.signalConfig(devicesSettings.getDevicesConfDict())
 
+    modbusController.newMeasuredValues.connect(webUpdateStatus.onNewLiveData, QtCore.Qt.QueuedConnection)
+
     #Start the app
     application.show()
     webUpdateStatus.asyncConnect()

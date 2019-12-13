@@ -23,16 +23,23 @@ class ModbusController(TimerStatusObject):
     def __init__(self):
         super().__init__(3000)
         self.devices = []
+        self.configuration = {}
 
     @QtCore.pyqtSlot(dict)
     def newDevicesConfiguration(self, configuration):
         self.devices.clear()
+        self.configuration = configuration
         for device in configuration:
-            self.devices.append(ModbusDeviceType.DeviceTypes.createDevice(device[DeviceDictAccessor.NAME], int(device[DeviceDictAccessor.ADDRESS]), device[DeviceDictAccessor.DEV_TYPE]))
+            self.devices.append(ModbusDeviceType.DeviceTypes.createDevice(device[DeviceDictAccessor.ID], int(device[DeviceDictAccessor.ADDRESS]), device[DeviceDictAccessor.DEV_TYPE]))
 
     def onTimeout(self):
-        measuredValues = {} 
+        config = self.configuration
+        tmp = {}
         for device in self.devices:
-            measuredValues.update( { device.getName() : ModbusDialog.getMeasuredValues(device) })
-        self.newMeasuredValues.emit(measuredValues)
+            tmp.update( { device.getName() : ModbusDialog.getMeasuredValues(device) })
+
+        for device in config:
+            device.update({DeviceDictAccessor.LIVE_DATA : tmp[device[DeviceDictAccessor.ID]]})
+
+        self.newMeasuredValues.emit(config)
 

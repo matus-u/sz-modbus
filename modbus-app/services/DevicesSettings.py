@@ -34,5 +34,4 @@ class DevicesSettings(QtCore.QObject):
 
     def signalConfig(self, configuration):
         self.newDeviceConfigPrepared.emit(configuration)
-        
 

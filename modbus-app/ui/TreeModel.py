@@ -145,10 +145,11 @@ class TreeModel(QAbstractItemModel):
             rootItem.appendChild(devItem)
 
     def updateLiveData(self, liveData):
-        for device, measuredValues in liveData.items():
+        for dev in liveData:
+            deviceName = dev[ModbusDeviceDict.DeviceDictAccessor.NAME]
             for item in self.rootItem.children():
-                if device == item.data(0):
-                    self.updateDeviceLiveData(item, measuredValues)
+                if deviceName == item.data(0):
+                    self.updateDeviceLiveData(item, dev[ModbusDeviceDict.DeviceDictAccessor.LIVE_DATA])
 
     def updateDeviceLiveData(self, deviceItem, measuredValues):
         for index, valueItem in enumerate(deviceItem.children()):
