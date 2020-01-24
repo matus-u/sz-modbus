@@ -23,14 +23,23 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
         self.ui.removeDeviceButton.setEnabled(False)
         self.ui.editDeviceButton.setEnabled(False)
 
+        self.ui.devicesWidget.setColumnWidth(0, 250);
+        self.ui.devicesWidget.setColumnWidth(1, 250);
+        self.ui.devicesWidget.setColumnWidth(2, 50);
+
         self.populateConfiguration()
+
+    def createTableItem(self, data):
+        tableItem = QtWidgets.QTableWidgetItem(data)
+        tableItem.setTextAlignment(QtCore.Qt.AlignCenter);
+        return tableItem
 
     def populateConfiguration(self):
         self.ui.devicesWidget.setRowCount(len(self.configuration))
         for index, item in enumerate(self.configuration):
-            self.ui.devicesWidget.setItem(index , 0, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.NAME]))
-            self.ui.devicesWidget.setItem(index , 1, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
-            self.ui.devicesWidget.setItem(index , 2, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
+            self.ui.devicesWidget.setItem(index , 0, self.createTableItem(item[ModbusDeviceDict.DeviceDictAccessor.NAME]))
+            self.ui.devicesWidget.setItem(index , 1, self.createTableItem(item[ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
+            self.ui.devicesWidget.setItem(index , 2, self.createTableItem(item[ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
 
     def onAddButton(self):
         w = AddEditDeviceWindow.AddEditDeviceWindow(self, notAllowedAddresses = [conf[ModbusDeviceDict.DeviceDictAccessor.ADDRESS] for conf in self.configuration])
@@ -77,9 +86,9 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
     def onEditFinished(self, window, code, index):
         if code:
             self.configuration[index].update(window.deviceConf())
-            self.ui.devicesWidget.setItem(index , 0, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.NAME]))
-            self.ui.devicesWidget.setItem(index , 1, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
-            self.ui.devicesWidget.setItem(index , 2, QtWidgets.QTableWidgetItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
+            self.ui.devicesWidget.setItem(index , 0, self.createTableItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.NAME]))
+            self.ui.devicesWidget.setItem(index , 1, self.createTableItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.DEV_TYPE]))
+            self.ui.devicesWidget.setItem(index , 2, self.createTableItem(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
 
 
     def getConfiguration(self):
