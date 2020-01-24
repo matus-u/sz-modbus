@@ -20,7 +20,7 @@ import sys
 from generated import themes
 
 def setStyle(app):
-    QApplication.setStyle(QtWidgets.QStyleFactory.create("motif"))
+    #QApplication.setStyle(QtWidgets.QStyleFactory.create("motif"))
     styleFile = QtCore.QFile(":/dark-orange.qss")
     styleFile.open(QtCore.QIODevice.ReadOnly)
     data = styleFile.readAll()

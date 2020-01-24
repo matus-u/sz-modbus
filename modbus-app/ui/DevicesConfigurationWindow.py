@@ -59,8 +59,10 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
 
     def onRemoveButton(self):
         index = self.ui.devicesWidget.currentRow()
-        self.configuration.pop(index)
-        self.ui.devicesWidget.removeRow(index)
+        shouldRemove = QtWidgets.QMessageBox.question(self, self.tr("Delete device"), self.tr("Do you really want to delete device {}").format(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.NAME]))
+        if shouldRemove == QtWidgets.QMessageBox.Yes:
+            self.configuration.pop(index)
+            self.ui.devicesWidget.removeRow(index)
 
     def onEditButton(self):
         index = self.ui.devicesWidget.currentRow()
