@@ -33,7 +33,7 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
             self.ui.devicesWidget.setItem(index , 2, QtWidgets.QTableWidgetItem(item[ModbusDeviceDict.DeviceDictAccessor.ADDRESS]))
 
     def onAddButton(self):
-        w = AddEditDeviceWindow.AddEditDeviceWindow(self)
+        w = AddEditDeviceWindow.AddEditDeviceWindow(self, notAllowedAddresses = [conf[ModbusDeviceDict.DeviceDictAccessor.ADDRESS] for conf in self.configuration])
         w.finished.connect(lambda retCode: self.onAddFinished(w, retCode))
         Helpers.openSubWindow(self, w)
         w.move(self.pos().x(), self.pos().y())
@@ -63,8 +63,10 @@ class DevicesConfigurationWindow(QtWidgets.QDialog):
         self.ui.devicesWidget.removeRow(index)
 
     def onEditButton(self):
-        w = AddEditDeviceWindow.AddEditDeviceWindow(self, editMode = True)
         index = self.ui.devicesWidget.currentRow()
+        notAllowedAddresses = [conf[ModbusDeviceDict.DeviceDictAccessor.ADDRESS] for conf in self.configuration]
+        notAllowedAddresses.remove(self.configuration[index][ModbusDeviceDict.DeviceDictAccessor.ADDRESS])
+        w = AddEditDeviceWindow.AddEditDeviceWindow(self, editMode = True, notAllowedAddresses = notAllowedAddresses)
         w.setDeviceConfData(self.configuration[index])
         w.finished.connect(lambda retCode: self.onEditFinished(w, retCode, index))
         Helpers.openSubWindow(self, w)

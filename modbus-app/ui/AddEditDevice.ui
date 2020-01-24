@@ -85,6 +85,9 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
     <property name="maximum">
      <number>32768</number>
     </property>
@@ -116,7 +119,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="okButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
@@ -198,22 +201,6 @@
     <hint type="destinationlabel">
      <x>78</x>
      <y>182</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>AddEditDevice</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>353</x>
-     <y>253</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>496</x>
-     <y>210</y>
     </hint>
    </hints>
   </connection>
