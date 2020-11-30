@@ -6,26 +6,26 @@ apt-get install \
     python3 \
     python3-pip \
     bc \
-    python3-serial \ 
-    python3-pyside2.qtqml \
-    python3-pyside2.qtnetwork \
-    python3-pyside2.qtquick \
-    python3-pyside2.qtquickwidgets \
+    python3-serial \
+    python3-pyqt5  \
+    pyqt5-dev-tools \
+    qtvirtualkeyboard-plugin \
+    qml-module-qtquick-virtualkeyboard \
+    qml-module-qt-labs-folderlistmodel \
+    qml-module-qtquick2 \
+    qml-module-qtquick-layouts \
+    qml-module-qtquick-window2 \
     qtdeclarative5-dev \
     qml-module-qtquick-controls2 \
-    python-pyside2.qtquick libqt53dquick5 \
+    libqt53dquick5 \
     qml-module-qtquick-dialogs \
-    qml-module-qt-labs-settings
-    pyside2-tools \
-    python3-pyside2.qtwebsockets \
-    python3-pyside2.qtcore \
-    python3-pyside2.qtwidgets \
-    python3-pyside2.qtgui \
+    qml-module-qt-labs-settings \
     qtvirtualkeyboard-plugin \
     qml-module-qtquick-virtualkeyboard \
     qml-module-qt-labs-folderlistmodel \
     bash \
-    python3-setup-tools \
+    python3-pyqt5.qtwebsockets \
+    python3-setuptools \
     net-tools
 
 pip3 install --upgrade OPi.GPIO

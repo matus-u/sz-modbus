@@ -55,8 +55,9 @@ class MultipleMeteo(ModbusDevice):
 class GpsSensor(ModbusDevice):
     def __init__(self, serialPort, address):
         super().__init__(serialPort, address)
-    
+
     def getCharacteristics(self, serialPort):
+        chars = self.getMetaEmptyCharacteristics()
         chars[0][MeasuredCharacteristic.CharacteristicStrings.VALUE] = str(getNumber())
         chars[1][MeasuredCharacteristic.CharacteristicStrings.VALUE] = str(getNumber())
         return chars

@@ -63,8 +63,8 @@ class WebSocketStatus(TimerService.TimerStatusObject):
         self.connectScheduled = False
         if self.dataServer is not "":
             URL = self.dataServer + "/socket/websocket"# + self.macAddr
-            self.URL = URL.replace("http://", "ws://")
-            LoggingService.getLogger().info("Connecting to websocket server: %s" % URL)
+            self.URL = URL.replace("http", "ws")
+            LoggingService.getLogger().info("Connecting to websocket server: %s" % self.URL)
             self.websocket = QtWebSockets.QWebSocket(parent=self)
             self.websocket.connected.connect(self.onConnect)
             self.websocket.disconnected.connect(self.onDisconnect)

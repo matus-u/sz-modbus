@@ -26,7 +26,7 @@ class MeasuredCharacteristic:
             MeasuredCharacteristic.CharacteristicStrings.NAME : name,
             MeasuredCharacteristic.CharacteristicStrings.CHARACTERISTIC_TYPE : charType,
             MeasuredCharacteristic.CharacteristicStrings.VALUE : value,
-            MeasuredCharacteristic.CharacteristicStrings.UNIT : unit 
+            MeasuredCharacteristic.CharacteristicStrings.UNIT : unit
         }
 
     @staticmethod
